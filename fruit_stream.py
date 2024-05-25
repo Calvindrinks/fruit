@@ -2,6 +2,9 @@ import streamlit as st
 from datetime import datetime
 from datetime import time
 
+import pytz
+timezone = pytz.timezone('Asia/Shanghai')
+
 st.set_page_config(page_title='Fruit Time Calculator', page_icon="🍎", layout='wide', initial_sidebar_state='auto')
 
 def hour2min(hour, min):
@@ -19,13 +22,22 @@ def get_fruit_time(fruit_time):
 
 def fresh_continue_from_type(type=32):
     if type == 6:
-        return (2, 0)
+        water_fresh_continue_time = (2, 0)
+        fruit_input = (3, 0)
+        water_now_continue_input = (2, 0)
     elif type == 12:
-        return (4, 0)
+        water_fresh_continue_time = (4, 0)
+        fruit_input = (6, 0)
+        water_now_continue_input = (4, 0)
     elif type == 16:
-        return (5, 20)
+        water_fresh_continue_time = (5, 20)
+        fruit_input = (8, 0)
+        water_now_continue_input = (5, 20)
     elif type == 32:
-        return (10, 40)
+        water_fresh_continue_time = (10, 40)
+        fruit_input = (16, 0)
+        water_now_continue_input = (10, 40)
+        return water_fresh_continue_time, fruit_input, water_now_continue_input
     else:
         raise Exception("未知的水果类型")
 
@@ -36,18 +48,14 @@ st.markdown("""
         <h4 style="color:white;text-align:center;">Author: 春饼侠</h4>
     </div>
     """, unsafe_allow_html=True)
+st.markdown("第一个填水果类型，第二个是水果成熟剩余时间，第三个是水分还能维持时间（需要游戏内点击蓝色小问号查看)")
 # 创建一个选择器来选择水果类型
 fruit_type = st.selectbox('🍇 Select fruit type', [32, 16, 12, 6])
 st.warning(f"Selected crop type: {fruit_type} hours")
 
-# 计算水果的新鲜持续时间
-WATER_FRESH_CONTINUE = fresh_continue_from_type(fruit_type)
-
-# 获取用户输入的水果显示时间和当前水果持续时间
-
-# 预设的时间
-fruit_input = (0, 41)
-water_now_continue_input = (1, 3)
+# 计算水果的新鲜持续时间, 预设的时间
+WATER_FRESH_CONTINUE, fruit_input, water_now_continue_input = fresh_continue_from_type(
+    fruit_type)
 
 # 创建小时和分钟的下拉菜单选项
 hours = list(range(24))
@@ -72,3 +80,6 @@ fruit_hour = get_fruit_time(fastest_now_fruit_needed)
 
 # 显示结果
 st.success(f"🌱 Predicts: The fastest maturity time is {fruit_hour[0]}:{fruit_hour[1]}")
+
+if fresh_water_passed_time > fastest_water_fruit_needed:
+    st.success("🌱 浇水就能收: The fruit has matured, please harvest it in time")
