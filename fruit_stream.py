@@ -23,19 +23,24 @@ def get_fruit_time(fruit_time, timezone):
     return fruit_hour, fruit_min
 
 def fresh_continue_from_type(type=32):
-    fruit_input = (0, 0)
     if type == 6:
         water_fresh_continue_time = (2, 0)
+        fruit_input = (0, 0)
         water_now_continue_input = (2, 0)
     elif type == 12:
         water_fresh_continue_time = (4, 0)
+        fruit_input = (0, 0)
         water_now_continue_input = (4, 0)
     elif type == 16:
         water_fresh_continue_time = (5, 20)
+        fruit_input = (0, 0)
         water_now_continue_input = (5, 20)
     elif type == 32:
         water_fresh_continue_time = (10, 40)
+        fruit_input = (0, 0)
         water_now_continue_input = (10, 40)
+    else:
+        raise Exception("未知的水果类型")
     return water_fresh_continue_time, fruit_input, water_now_continue_input
 
 # Streamlit 应用开始
