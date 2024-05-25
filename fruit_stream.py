@@ -82,7 +82,7 @@ fastest_now_fruit_needed = fastest_water_fruit_needed - fresh_water_passed_time
 fruit_hour = get_fruit_time(fastest_now_fruit_needed, timezone)
 
 # 显示结果
-st.success(f"🌱 Predicts: The fastest maturity time is {fruit_hour[0]}:{fruit_hour[1]}")
+st.success(f"🌱 Predicts(预测最早收获时间): The fastest maturity time is {fruit_hour[0]}:{fruit_hour[1]}")
 
 if fresh_water_passed_time > fastest_water_fruit_needed:
     st.success("🌱 浇水就能收: The fruit has matured, please harvest it in time")
