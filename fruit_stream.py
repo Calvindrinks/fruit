@@ -49,6 +49,7 @@ st.markdown("""
     </div>
     """, unsafe_allow_html=True)
 st.markdown("第一个填水果类型，第二个是水果成熟剩余时间，第三个是水分还能维持时间（需要游戏内点击蓝色小问号查看)")
+st.markdown("注意事项：时间仅包含小时和分钟，不包含天数/秒数，请根据实际情况填0")
 # 创建一个选择器来选择水果类型
 fruit_type = st.selectbox('🍇 Select fruit type', [32, 16, 12, 6])
 st.warning(f"Selected crop type: {fruit_type} hours")
