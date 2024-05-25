@@ -14,8 +14,8 @@ def min2hour(min):
     return int(min // 60), int(min % 60)
 
 def get_fruit_time(fruit_time, timezone):
-    now = datetime.now()
-    Shanghai_timezone = timezone.localize(now)
+    Shanghai_timezone = datetime.now(timezone)
+    
     now = Shanghai_timezone.hour * 60 + Shanghai_timezone.now().minute
     fruit_time_min = now + fruit_time
     fruit_hour, fruit_min = min2hour(fruit_time_min)
@@ -23,21 +23,18 @@ def get_fruit_time(fruit_time, timezone):
     return fruit_hour, fruit_min
 
 def fresh_continue_from_type(type=32):
+    fruit_input = (0, 0)
     if type == 6:
         water_fresh_continue_time = (2, 0)
-        fruit_input = (3, 0)
         water_now_continue_input = (2, 0)
     elif type == 12:
         water_fresh_continue_time = (4, 0)
-        fruit_input = (6, 0)
         water_now_continue_input = (4, 0)
     elif type == 16:
         water_fresh_continue_time = (5, 20)
-        fruit_input = (8, 0)
         water_now_continue_input = (5, 20)
     elif type == 32:
         water_fresh_continue_time = (10, 40)
-        fruit_input = (16, 0)
         water_now_continue_input = (10, 40)
         return water_fresh_continue_time, fruit_input, water_now_continue_input
     else:
