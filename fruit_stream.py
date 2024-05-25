@@ -36,9 +36,7 @@ def fresh_continue_from_type(type=32):
     elif type == 32:
         water_fresh_continue_time = (10, 40)
         water_now_continue_input = (10, 40)
-        return water_fresh_continue_time, fruit_input, water_now_continue_input
-    else:
-        raise Exception("未知的水果类型")
+    return water_fresh_continue_time, fruit_input, water_now_continue_input
 
 # Streamlit 应用开始
 st.title('🍎 Fruit Time Calculator 🍎')
