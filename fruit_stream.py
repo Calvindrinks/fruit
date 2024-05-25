@@ -13,8 +13,10 @@ def hour2min(hour, min):
 def min2hour(min):
     return int(min // 60), int(min % 60)
 
-def get_fruit_time(fruit_time):
-    now = datetime.now().hour * 60 + datetime.now().minute
+def get_fruit_time(fruit_time, timezone):
+    now = datetime.now()
+    Shanghai_timezone = timezone.localize(now)
+    now = Shanghai_timezone.hour * 60 + Shanghai_timezone.now().minute
     fruit_time_min = now + fruit_time
     fruit_hour, fruit_min = min2hour(fruit_time_min)
     fruit_hour %= 24
@@ -48,7 +50,7 @@ st.markdown("""
         <h4 style="color:white;text-align:center;">Author: 春饼侠</h4>
     </div>
     """, unsafe_allow_html=True)
-st.markdown("第一个填水果类型，第二个是水果成熟剩余时间，第三个是水分还能维持时间（需要游戏内点击蓝色小问号查看)")
+st.markdown("第一个填水果类型，第二个填水果成熟剩余时间，第三个是水分还能维持时间（需要游戏内点击蓝色小问号查看)")
 st.markdown("注意事项：时间仅包含小时和分钟，不包含天数/秒数，请根据实际情况填0")
 # 创建一个选择器来选择水果类型
 fruit_type = st.selectbox('🍇 Select fruit type', [32, 16, 12, 6])
@@ -59,7 +61,7 @@ WATER_FRESH_CONTINUE, fruit_input, water_now_continue_input = fresh_continue_fro
     fruit_type)
 
 # 创建小时和分钟的下拉菜单选项
-hours = list(range(24))
+hours = list(range(32))
 minutes = list(range(60))
 
 fruit_input_hour = st.selectbox('🍉 Fruit hour', hours, index=fruit_input[0])
@@ -77,7 +79,7 @@ fresh_water_passed_time = hour2min(*WATER_FRESH_CONTINUE) - hour2min(*water_now_
 fresh_water_fruit_time = hour2min(*fruit_showed_time) + fresh_water_passed_time
 fastest_water_fruit_needed = fresh_water_fruit_time / 5 * 4
 fastest_now_fruit_needed = fastest_water_fruit_needed - fresh_water_passed_time
-fruit_hour = get_fruit_time(fastest_now_fruit_needed)
+fruit_hour = get_fruit_time(fastest_now_fruit_needed, timezone)
 
 # 显示结果
 st.success(f"🌱 Predicts: The fastest maturity time is {fruit_hour[0]}:{fruit_hour[1]}")
